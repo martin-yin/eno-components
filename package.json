@@ -1,20 +1,27 @@
 {
-  "name": "eno-components",
-  "version": "1.0.0",
+  "name": "root",
+  "version": "0.0.1",
   "description": "",
-  "main": "index.js",
-  "workspaces": [
-    "packages/*"
-  ],
+  "private": true,
+  "main": "",
   "scripts": {
-    "start": "dumi dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:docs": "dumi dev",
+    "project:clean": "lerna clean",
+    "project:init": "pnpm install"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
+    "@umijs/plugin-esbuild": "^1.4.1",
+    "antd": "^4.19.5",
+    "babel-loader": "^8.2.4",
     "babel-plugin-import": "^1.13.3",
     "dumi": "^1.1.40",
     "esbuild": "^0.14.29",

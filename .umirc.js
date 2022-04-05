@@ -15,8 +15,6 @@ const alias = pkgList.reduce((pre, pkg) => {
   };
 }, {});
 
-
-console.log(pkgList, '=============')
 const tailPkgList = pkgList
   .map((path) => [join('packages', path), join('packages', path, 'src'), join('packages', path, 'src', 'components')])
   .reduce((acc, val) => acc.concat(val), []);
@@ -77,6 +75,7 @@ export default {
   theme: {
     '@s-site-menu-width': '258px',
   },
+  esbuild: {},
   ignoreMomentLocale: true,
   headScripts: ['https://gw.alipayobjects.com/os/antfincdn/fdj3WlJd5c/darkreader.js'],
   links:
@@ -84,14 +83,6 @@ export default {
       ? ['https://gw.alipayobjects.com/os/lib/antd/4.6.6/dist/antd.css']
       : [],
   externals: { darkreader: 'window.DarkReader' },
-  // menus: {
-  //   '/components': [
-  //     {
-  //       title: '组件',
-  //       children: ['picture-libray'],
-  //     },
-  //   ],
-  // },
   webpack5: {},
   mfsu: !isDeploy ? {} : undefined,
   fastRefresh: {},
