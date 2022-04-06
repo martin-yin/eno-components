@@ -47,9 +47,6 @@ export default {
   resolve: {
     includes: [...tailPkgList, 'docs'],
   },
-  locales: [
-    ['zh-CN', '中文'],
-  ],
   navs: [
     null,
     {
