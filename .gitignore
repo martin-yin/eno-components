@@ -22,5 +22,7 @@ yarn-error.log*
 *.sln
 *.sw*
 
+.umi-production
+/dist
 /.umi
 /docs-dist

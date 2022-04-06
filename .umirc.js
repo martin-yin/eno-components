@@ -54,6 +54,8 @@ export default {
       path: 'https://github.com/martin-yin/eno-components',
     },
   ],
+  base: '/eno-components',
+  publicPath: '/eno-components/',
   analytics: isProduction
     ? {
         ga: 'UA-173569162-1',
