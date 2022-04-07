@@ -1,8 +1,12 @@
 import React, { FC } from 'react'
-import { Button, Pagination } from 'antd'
+import { Button, Pagination, Upload, UploadProps } from 'antd'
 import { CheckOutlined } from '@ant-design/icons'
 
-export interface ImgPickerListProps {
+export interface PictureListProps {
+  /**
+   * @description antd 上传组件 UploadProps
+   */
+  uploadProps?: UploadProps
   /**
    * @description 图片list
    */
@@ -18,7 +22,7 @@ export interface ImgPickerListProps {
   onPageChange: (page: number, pageSize: number) => void
 }
 
-const ImgPickerList: FC<ImgPickerListProps> = ({ imgList, selectKeys, setSelectKeys, onPageChange }) => {
+const PictureList: FC<PictureListProps> = ({ imgList, uploadProps, selectKeys, setSelectKeys, onPageChange }) => {
   const handleSelect = (index: number) => {
     if (isSelect(index)) {
       const indexof = selectKeys.indexOf(index)
@@ -42,41 +46,46 @@ const ImgPickerList: FC<ImgPickerListProps> = ({ imgList, selectKeys, setSelectK
   }
 
   return (
-    <div className="img-picker__list__wrp">
-      <div className="img-picker__list ">
+    <div className="picture">
+      <div className="picture-button">
+        <Upload {...uploadProps}>
+          <Button>上传图片</Button>
+        </Upload>
+      </div>
+      <div className="picture-list">
         {imgList.map((item, index) => {
           return (
             <div
-              className={`img-picker__item ${isSelect(index) ? 'acitve' : ''} `}
+              className={`picture-list-item ${isSelect(index) ? 'picture-list-item__acitve' : ''} `}
               key={index}
               onClick={() => handleSelect(index)}
             >
               <div
-                className="img-picker__item-cover"
+                className="picture-list-item__cover"
                 style={{
                   background: `url(${item.fileUrl}) no-repeat 50% / 100%`
                 }}
               ></div>
-              <p className="img-picker__item-file-name">{item.fileName}</p>
-              <div className="select-mask">
-                <CheckOutlined className="selected-icon" />
+              <p className="picture-list-item__name">{item.fileName}</p>
+              <div className="selected-mask">
+                <CheckOutlined className="selected-mask_icon" />
               </div>
             </div>
           )
         })}
       </div>
-      <div className="img-picker__operate">
-        <div className="img-picker__operate_select">
+      <div className="footer">
+        <div className="footer-select">
           {selectKeys.length > 0 ?? (
             <>
-              <span className="footer-desc">已选择 {selectKeys.length}项</span>
+              <span className="footer-select__text">已选择 {selectKeys.length}项</span>
               <Button size="small" onClick={() => handleDelete()}>
                 删除
               </Button>
             </>
           )}
         </div>
-        <div className="img-picker__operate_page">
+        <div className="footer-page">
           <Pagination
             showSizeChanger={false}
             total={imgList.length}
@@ -90,6 +99,6 @@ const ImgPickerList: FC<ImgPickerListProps> = ({ imgList, selectKeys, setSelectK
   )
 }
 
-ImgPickerList.displayName = 'ImgPickerList'
+PictureList.displayName = 'PictureList'
 
-export default ImgPickerList
+export default PictureList

@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react'
 
 function noop() {}
 
-export interface ImgCategoryProps {
+export interface PictureCategoryProps {
   /**
    * @description 左侧菜单列表
    */
@@ -18,7 +18,7 @@ export interface ImgCategoryProps {
   onCategoryAdd?: (category: string) => void
 }
 
-const ImgCategory: FC<ImgCategoryProps> = ({ categoryList, onCategoryChange, onCategoryAdd = noop }) => {
+const PictureCategory: FC<PictureCategoryProps> = ({ categoryList, onCategoryChange, onCategoryAdd = noop }) => {
   const [selectIndex, setSelectIndex] = useState(0)
 
   const handleSelectIndex = (item: string, index: number) => {
@@ -57,21 +57,21 @@ const ImgCategory: FC<ImgCategoryProps> = ({ categoryList, onCategoryChange, onC
     </>
   )
   return (
-    <div id="img-category">
-      <div className="menu">
+    <div className="category">
+      <div className="category-menu">
         {categoryList.map((item, index) => {
           return (
             <div
               key={index}
               onClick={() => handleSelectIndex(item, index)}
-              className={`menu__link menu__link-self ${index === selectIndex ? 'menu__item_current' : ''}`}
+              className={`category-menu__item ${index === selectIndex ? 'category-menu__item-current' : ''}`}
             >
-              <strong className="img-category__title">{item}</strong>
+              <strong className="category-menu__item-title">{item}</strong>
             </div>
           )
         })}
       </div>
-      <div className="img-category__add">
+      <div className="category-button">
         <Popover trigger="click" content={categoryAdd}>
           新增分类
         </Popover>
@@ -80,6 +80,6 @@ const ImgCategory: FC<ImgCategoryProps> = ({ categoryList, onCategoryChange, onC
   )
 }
 
-ImgCategory.displayName = 'ImgCategory'
+PictureCategory.displayName = 'PictureCategory'
 
-export default ImgCategory
+export default PictureCategory
