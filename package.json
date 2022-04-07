@@ -6,6 +6,7 @@
   "main": "",
   "scripts": {
     "start:docs": "dumi dev",
+    "build:docs": "dumi build",
     "project:clean": "lerna clean",
     "project:init": "pnpm install",
     "lint": "prettier --write **/*.{js,tsx,ts,md,json} && git add .",
