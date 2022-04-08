@@ -66,7 +66,7 @@ const PictureCategory: FC<PictureCategoryProps> = ({ categoryList, onCategoryCha
               onClick={() => handleSelectIndex(item, index)}
               className={`category-menu__item ${index === selectIndex ? 'category-menu__item-current' : ''}`}
             >
-              <strong className="category-menu__item-title">{item}</strong>
+              <p className="category-menu__item-title text-hide">{item}</p>
             </div>
           )
         })}

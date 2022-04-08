@@ -22,8 +22,18 @@ export interface PictureLibrayProps
 }
 
 const PictureLibray: FC<PictureLibrayProps> = props => {
-  const { onCategoryChange, categoryList, onCategoryAdd, uploadProps, imgList, visible, onCancel, onOk, onPageChange } =
-    props
+  const {
+    onCategoryChange,
+    categoryList,
+    onCategoryAdd,
+    uploadProps,
+    imageList,
+    visible,
+    onCancel,
+    onOk,
+    onPageChange,
+    total
+  } = props
   const [selectKeys, setSelectKeys] = useState<Array<number>>([])
 
   const handleOk = () => {
@@ -49,11 +59,12 @@ const PictureLibray: FC<PictureLibrayProps> = props => {
           categoryList={categoryList}
         />
         <PictureList
+          total={total}
           uploadProps={uploadProps}
           onPageChange={onPageChange}
           selectKeys={selectKeys}
           setSelectKeys={setSelectKeys}
-          imgList={imgList}
+          imageList={imageList}
         />
       </div>
     </Modal>

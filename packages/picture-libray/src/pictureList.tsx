@@ -8,9 +8,9 @@ export interface PictureListProps {
    */
   uploadProps?: UploadProps
   /**
-   * @description 图片list
+   * @description 图片集合
    */
-  imgList: Array<{
+  imageList: Array<{
     fileName: string
     fileUrl: string
   }>
@@ -20,9 +20,20 @@ export interface PictureListProps {
    * @description 分页切换回调
    */
   onPageChange: (page: number, pageSize: number) => void
+  /**
+   * @description 总图片数量，用于分页使用
+   */
+  total: number
 }
 
-const PictureList: FC<PictureListProps> = ({ imgList, uploadProps, selectKeys, setSelectKeys, onPageChange }) => {
+const PictureList: FC<PictureListProps> = ({
+  imageList,
+  uploadProps,
+  selectKeys,
+  setSelectKeys,
+  onPageChange,
+  total
+}) => {
   const handleSelect = (index: number) => {
     if (isSelect(index)) {
       const indexof = selectKeys.indexOf(index)
@@ -45,15 +56,21 @@ const PictureList: FC<PictureListProps> = ({ imgList, uploadProps, selectKeys, s
     setSelectKeys([])
   }
 
+  const renderUploadButton = (): any => {
+    return uploadProps ? (
+      <Upload {...uploadProps}>
+        <Button>上传图片</Button>
+      </Upload>
+    ) : (
+      <></>
+    )
+  }
+
   return (
     <div className="picture">
-      <div className="picture-button">
-        <Upload {...uploadProps}>
-          <Button>上传图片</Button>
-        </Upload>
-      </div>
+      <div className="picture-button">{renderUploadButton()}</div>
       <div className="picture-list">
-        {imgList.map((item, index) => {
+        {imageList.map((item, index) => {
           return (
             <div
               className={`picture-list-item ${isSelect(index) ? 'picture-list-item__acitve' : ''} `}
@@ -66,7 +83,7 @@ const PictureList: FC<PictureListProps> = ({ imgList, uploadProps, selectKeys, s
                   background: `url(${item.fileUrl}) no-repeat 50% / 100%`
                 }}
               ></div>
-              <p className="picture-list-item__name">{item.fileName}</p>
+              <p className="picture-list-item__name text-hide">{item.fileName}</p>
               <div className="selected-mask">
                 <CheckOutlined className="selected-mask_icon" />
               </div>
@@ -88,7 +105,7 @@ const PictureList: FC<PictureListProps> = ({ imgList, uploadProps, selectKeys, s
         <div className="footer-page">
           <Pagination
             showSizeChanger={false}
-            total={imgList.length}
+            total={total}
             defaultPageSize={16}
             size="small"
             onChange={handlePageChange}

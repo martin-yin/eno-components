@@ -12,24 +12,42 @@ group:
 ## 基本使用
 
 ```tsx
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PictureLibray from './src/index'
 import { message, Button } from 'antd'
+import axios from 'axios'
 
 export default () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
+  const [imageList, setImageList] = useState([])
+  const [category, setCategory] = useState([])
+
+  const getImageList = async page => {
+    const {
+      data: { data }
+    } = await axios.get(
+      `https://www.fastmock.site/mock/41fa03b4c7422029e00ec4ee0c8063d2/api/api/imageList?page=${page}`
+    )
+    setImageList(data.list)
+    setCategory(data.category)
+  }
+
+  useEffect(() => {
+    ;(async () => {
+      await getImageList(1)
+    })()
+  }, [])
   const showModal = () => {
     setIsModalVisible(true)
   }
 
-  const handlePageChange = (page, pageSize) => {
-    console.log(page)
-    console.log(pageSize)
+  const handlePageChange = async (page, pageSize) => {
+    await getImageList()
   }
 
   const handleOk = (keys: string[]) => {
-    console.log(keys, '=')
+    message.success(`当前选中的 image index ${keys.toString()}`)
     setIsModalVisible(false)
   }
 
@@ -43,14 +61,9 @@ export default () => {
       console.log(category)
     },
     onCategoryAdd: () => {},
-    categoryList: ['全部', '电商', '公司资料', '其他'],
+    categoryList: category,
     onPageChange: handlePageChange,
-    imgList: [
-      {
-        fileName: '文件名称',
-        fileUrl: 'https://s1.ax1x.com/2022/04/06/qjNv5Q.jpg'
-      }
-    ],
+    imageList: imageList,
     uploadProps: {
       name: 'file',
       action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -60,14 +73,8 @@ export default () => {
       showUploadList: false
     },
     onCancel: handleCancel,
-    onOk: handleOk
-  }
-
-  for (let i = 0; i < 100; i++) {
-    props.imgList.push({
-      fileName: '文件名称' + i,
-      fileUrl: 'https://s1.ax1x.com/2022/04/06/qjNv5Q.jpg'
-    })
+    onOk: handleOk,
+    total: 30
   }
 
   return (
