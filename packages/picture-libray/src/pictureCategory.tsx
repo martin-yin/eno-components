@@ -23,7 +23,7 @@ export interface PictureCategoryProps {
 const PictureCategory: FC<PictureCategoryProps> = ({
   categoryList,
   onCategoryChange,
-  onCategoryAdd = noop,
+  onCategoryAdd,
   setSelectedKeys
 }) => {
   const [selectIndex, setSelectIndex] = useState(0)
@@ -34,9 +34,7 @@ const PictureCategory: FC<PictureCategoryProps> = ({
     onCategoryChange(item)
   }
   const onFinish = (value: any) => {
-    if (onCategoryAdd) {
-      onCategoryAdd(value)
-    }
+    onCategoryAdd?.(value)
   }
 
   const onFinishFailed = (errorInfo: any) => {

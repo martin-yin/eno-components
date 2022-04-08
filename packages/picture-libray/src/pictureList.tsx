@@ -36,15 +36,8 @@ export interface PictureListProps {
   total: number
 }
 
-const PictureList: FC<PictureListProps> = ({
-  imageList,
-  selectedKeys,
-  setSelectedKeys,
-  uploadProps,
-  onPageChange,
-  total,
-  onDelete
-}) => {
+const PictureList: FC<PictureListProps> = props => {
+  const { imageList, selectedKeys, setSelectedKeys, uploadProps, onPageChange, total, onDelete } = props
   const handleSelectItem = (key: number) => {
     const index = selectedKeys.indexOf(key)
     if (index >= 0) {
@@ -57,12 +50,10 @@ const PictureList: FC<PictureListProps> = ({
 
   // Todo: 待定实现
   const handleDelete = () => {
-    if (typeof onDelete == 'function') {
-      const ids = selectedKeys.map(index => {
-        return imageList[index].id
-      })
-      onDelete(ids)
-    }
+    const ids = selectedKeys.map(index => {
+      return imageList[index].id
+    })
+    onDelete?.(ids)
   }
 
   const handlePageChange = (page: number, pageSize: number) => {
@@ -110,7 +101,7 @@ const PictureList: FC<PictureListProps> = ({
           {selectedKeys.length > 0 ? (
             <>
               <span className="footer-select__text">已选择 {selectedKeys.length}项</span>
-              {typeof onDelete == 'function' ? (
+              {onDelete ? (
                 <Button size="small" onClick={() => handleDelete()}>
                   删除
                 </Button>

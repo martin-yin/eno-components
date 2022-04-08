@@ -21,20 +21,19 @@ export interface PictureLibrayProps
   onCancel?: () => void
 }
 
-const PictureLibray: FC<PictureLibrayProps> = props => {
-  const {
-    onCategoryChange,
-    categoryList,
-    onCategoryAdd,
-    uploadProps,
-    imageList,
-    visible,
-    onCancel,
-    onOk,
-    onPageChange,
-    onDelete,
-    total
-  } = props
+const PictureLibray: FC<PictureLibrayProps> = ({
+  onCategoryChange,
+  categoryList,
+  onCategoryAdd,
+  uploadProps,
+  imageList,
+  visible,
+  onCancel,
+  onOk,
+  onPageChange,
+  onDelete,
+  total
+}) => {
   const [selectedKeys, setSelectedKeys] = useState<Array<number>>([])
 
   const handleOk = () => {
