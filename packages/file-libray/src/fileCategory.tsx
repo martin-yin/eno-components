@@ -1,40 +1,22 @@
 import { Button, Form, Input, Popover } from 'antd'
 import React, { FC, useState } from 'react'
 
-function noop() {}
-
-export interface PictureCategoryProps {
-  /**
-   * @description 左侧菜单列表
-   */
+export interface FileCategoryProps {
   categoryList: Array<string>
-  /**
-   * @description 左侧分类切换回调
-   */
-  onCategoryChange: (category: string) => void
-  /**
-   * @description 添加左侧分类回调
-   */
+  onCategoryChange: (category: string, index: number) => void
   onCategoryAdd?: (category: string) => void
-
-  setSelectedKeys: (index: Array<number>) => void
 }
 
-const PictureCategory: FC<PictureCategoryProps> = ({
-  categoryList,
-  onCategoryChange,
-  onCategoryAdd,
-  setSelectedKeys
-}) => {
+const FileCategory: FC<FileCategoryProps> = ({ categoryList, onCategoryChange, onCategoryAdd }) => {
   const [selectIndex, setSelectIndex] = useState(0)
 
   const handleSelectIndex = (item: string, index: number) => {
     setSelectIndex(index)
-    setSelectedKeys([])
-    onCategoryChange(item)
+    onCategoryChange?.(item, index)
   }
-  const onFinish = (value: any) => {
-    onCategoryAdd?.(value)
+
+  const onFinish = (value: { category: string }) => {
+    onCategoryAdd?.(value.category)
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -86,6 +68,6 @@ const PictureCategory: FC<PictureCategoryProps> = ({
   )
 }
 
-PictureCategory.displayName = 'PictureCategory'
+FileCategory.displayName = 'FileCategory'
 
-export default PictureCategory
+export default FileCategory

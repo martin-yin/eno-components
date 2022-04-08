@@ -18,10 +18,10 @@ importers:
       eslint-config-prettier: ^8.5.0
       eslint-plugin-prettier: ^4.0.0
       eslint-plugin-react: ^7.29.4
+      file-libray: workspace:^0.0.1
       husky: ^7.0.4
       lerna: ^4.0.0
       lint-staged: ^12.3.7
-      picture-libray: workspace:^0.0.0
       prettier: ^2.6.1
       react: ^18.0.0
       rollup: ^2.70.1
@@ -41,9 +41,9 @@ importers:
       eslint-config-prettier: 8.5.0_eslint@8.12.0
       eslint-plugin-prettier: 4.0.0_f2c91d0f54113167d2bd9214a5ab5a36
       eslint-plugin-react: 7.29.4_eslint@8.12.0
+      file-libray: link:packages/file-libray
       husky: 7.0.4
       lint-staged: 12.3.7
-      picture-libray: link:packages/picture-libray
       prettier: 2.6.2
       react: 18.0.0
       rollup: 2.70.1
@@ -51,7 +51,7 @@ importers:
     devDependencies:
       lerna: 4.0.0
 
-  packages/picture-libray:
+  packages/file-libray:
     specifiers:
       antd: ^4.19.5
       react: ^18.0.0

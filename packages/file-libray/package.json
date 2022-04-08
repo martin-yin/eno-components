@@ -1,11 +1,11 @@
 {
-  "name": "picture-libray",
-  "version": "0.0.0",
-  "description": "> TODO: description",
+  "name": "file-libray",
+  "version": "0.0.1",
+  "description": "",
   "author": "martin-yin <martin-yin@foxmail.com>",
   "homepage": "https://github.com/martin-yin/eno-components#readme",
   "license": "ISC",
-  "main": "lib/picture-libray.js",
+  "main": "lib/file-libray.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"

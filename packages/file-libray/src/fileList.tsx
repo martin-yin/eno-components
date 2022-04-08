@@ -1,43 +1,31 @@
 import { CheckOutlined } from '@ant-design/icons'
-import { Button, Pagination, Upload, UploadProps } from 'antd'
+import { Button, Input, Pagination, PaginationProps, Upload, UploadProps } from 'antd'
 import React, { FC } from 'react'
+import { Params } from './fileLibray'
+const { Search } = Input
 
-export interface Image {
+export interface FileType {
   fileName: string
   fileUrl: string
   id: number
 }
 
-export type ImageList = Array<Image>
+export type FileListType = Array<FileType>
 
-export interface PictureListProps {
-  /**
-   * @description antd 上传组件 UploadProps，如果不传递则不显示上传按钮
-   */
-  uploadProps?: UploadProps
-  /**
-   * @description 图片集合
-   */
-  imageList: ImageList
+export interface FileListProps {
+  upload?: UploadProps
+  fileList: FileListType
   selectedKeys: Array<number>
   setSelectedKeys: (index: Array<number>) => void
-  /**
-   * @description 删除图片回调，如果不传递则不显示删除按钮
-   */
   onDelete?: (ids: Array<number>) => void
-
-  /**
-   * @description 分页切换回调
-   */
-  onPageChange: (page: number, pageSize: number) => void
-  /**
-   * @description 总图片数量，用于分页使用
-   */
+  setParams: (value: any) => void
+  pagination?: PaginationProps
   total: number
 }
 
-const PictureList: FC<PictureListProps> = props => {
-  const { imageList, selectedKeys, setSelectedKeys, uploadProps, onPageChange, total, onDelete } = props
+const FileList: FC<FileListProps> = props => {
+  const { fileList, selectedKeys, setSelectedKeys, upload, pagination, total, onDelete, setParams } = props
+
   const handleSelectItem = (key: number) => {
     const index = selectedKeys.indexOf(key)
     if (index >= 0) {
@@ -48,47 +36,64 @@ const PictureList: FC<PictureListProps> = props => {
     setSelectedKeys([...selectedKeys])
   }
 
-  // Todo: 待定实现
   const handleDelete = () => {
     const ids = selectedKeys.map(index => {
-      return imageList[index].id
+      return fileList[index].id
     })
     onDelete?.(ids)
   }
 
   const handlePageChange = (page: number, pageSize: number) => {
-    onPageChange(page, pageSize)
+    pagination?.onChange?.(page, pageSize)
     setSelectedKeys([])
+    setParams((value: Params) => {
+      return { ...value, page }
+    })
+  }
+
+  const handleSearch = (fileName: string) => {
+    setSelectedKeys([])
+    setParams((value: Params) => {
+      return { ...value, fileName }
+    })
   }
 
   const renderUploadButton = (): React.ReactNode => {
-    return uploadProps ? (
-      <Upload {...uploadProps}>
-        <Button>上传图片</Button>
-      </Upload>
-    ) : (
-      <></>
-    )
+    if (upload) {
+      // Todo: 做一层兼容
+      if (upload.onChange) {
+      }
+      return (
+        <Upload {...upload} showUploadList={false}>
+          <Button>上传</Button>
+        </Upload>
+      )
+    }
   }
 
   return (
-    <div className="picture">
-      <div className="picture-button">{renderUploadButton()}</div>
-      <div className="picture-list">
-        {imageList.map((item, key) => {
+    <div className="file">
+      <div className="file-header">
+        <div className="file-header__search">
+          <Search placeholder="请输入文件名称" onSearch={handleSearch} style={{ width: 200 }} />
+        </div>
+        <div className="file-header__button">{renderUploadButton()}</div>
+      </div>
+      <div className="file-list">
+        {fileList.map((item, key) => {
           return (
             <div
-              className={`picture-list-item ${selectedKeys.includes(key) ? 'picture-list-item__acitve' : ''} `}
+              className={`file-list-item ${selectedKeys.includes(key) ? 'file-list-item__acitve' : ''} `}
               key={key}
               onClick={() => handleSelectItem(key)}
             >
               <div
-                className="picture-list-item__cover"
+                className="file-list-item__cover"
                 style={{
                   background: `url(${item.fileUrl}) no-repeat 50% / 100%`
                 }}
               ></div>
-              <p className="picture-list-item__name text-hide">{item.fileName}</p>
+              <p className="file-list-item__name text-hide">{item.fileName}</p>
               <div className="selected-mask">
                 <CheckOutlined className="selected-mask_icon" />
               </div>
@@ -115,6 +120,7 @@ const PictureList: FC<PictureListProps> = props => {
         </div>
         <div className="footer-page">
           <Pagination
+            {...pagination}
             showSizeChanger={false}
             total={total}
             defaultPageSize={16}
@@ -127,6 +133,6 @@ const PictureList: FC<PictureListProps> = props => {
   )
 }
 
-PictureList.displayName = 'PictureList'
+FileList.displayName = 'FileList'
 
-export default PictureList
+export default FileList

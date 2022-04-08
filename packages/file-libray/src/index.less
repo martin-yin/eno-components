@@ -1,5 +1,5 @@
 
-.picture-libray {
+.file-libray {
     p {
         margin: 0;
     }
@@ -40,27 +40,9 @@
                 line-height: 40px;
                 border-radius: 0;
                 padding-left: 36px;
-                &-select-mask {
-                    display: none;
-                    position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    background: rgba(0, 0, 0, .41);
-                    text-align: center;
-                    border-radius: 2px;
-                    &-icon {
-                        font-size: 26px;
-                        color: #fff;
-                        line-height: 122px;
-                        text-align: center;
-                    }
-                }
                 &-current {
                     background-color: #f6f7f8
                 }
-
                 &-title {
                     color: #1a1b1c;
                     width: auto;
@@ -90,15 +72,21 @@
         }
     }
 
-    .picture {
+    .file {
         flex: 1;
-        &-button {
-            margin-bottom: 20px;
-            text-align: right;
+        &-header {
+            display: flex;
+            margin: 0 auto 20px auto;
+            width: 630px;
             height: 32px;
-            margin-right: 30px;
         }
-        .picture-list {
+        &-header__search {
+            flex: 1;
+        }
+        &-header__button {
+            flex: 0;
+        }
+        .file-list {
             margin: 0 auto;
             width: 630px;
             height: 428px;
@@ -164,7 +152,7 @@
     }
 }
 
-.picture-list-item__acitve .selected-mask {
+.file-list-item__acitve .selected-mask {
     display: block !important;
 }
 
