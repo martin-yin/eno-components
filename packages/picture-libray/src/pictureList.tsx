@@ -1,21 +1,31 @@
-import React, { FC } from 'react'
-import { Button, Pagination, Upload, UploadProps } from 'antd'
 import { CheckOutlined } from '@ant-design/icons'
+import { Button, Pagination, Upload, UploadProps } from 'antd'
+import React, { FC } from 'react'
+
+export interface Image {
+  fileName: string
+  fileUrl: string
+  id: number
+}
+
+export type ImageList = Array<Image>
 
 export interface PictureListProps {
   /**
-   * @description antd 上传组件 UploadProps
+   * @description antd 上传组件 UploadProps，如果不传递则不显示上传按钮
    */
   uploadProps?: UploadProps
   /**
    * @description 图片集合
    */
-  imageList: Array<{
-    fileName: string
-    fileUrl: string
-  }>
-  selectKeys: number[]
-  setSelectKeys: (value: number[]) => void
+  imageList: ImageList
+  selectedKeys: Array<number>
+  setSelectedKeys: (index: Array<number>) => void
+  /**
+   * @description 删除图片回调，如果不传递则不显示删除按钮
+   */
+  onDelete?: (ids: Array<number>) => void
+
   /**
    * @description 分页切换回调
    */
@@ -28,35 +38,39 @@ export interface PictureListProps {
 
 const PictureList: FC<PictureListProps> = ({
   imageList,
+  selectedKeys,
+  setSelectedKeys,
   uploadProps,
-  selectKeys,
-  setSelectKeys,
   onPageChange,
-  total
+  total,
+  onDelete
 }) => {
-  const handleSelect = (index: number) => {
-    if (isSelect(index)) {
-      const indexof = selectKeys.indexOf(index)
-      selectKeys.splice(indexof, 1)
+  const handleSelectItem = (key: number) => {
+    const index = selectedKeys.indexOf(key)
+    if (index >= 0) {
+      selectedKeys.splice(index, 1)
     } else {
-      selectKeys.push(index)
+      selectedKeys.push(key)
     }
-    setSelectKeys([...selectKeys])
-  }
-
-  const isSelect = (index: number) => {
-    return selectKeys.indexOf(index) >= 0
+    setSelectedKeys([...selectedKeys])
   }
 
   // Todo: 待定实现
-  const handleDelete = () => {}
+  const handleDelete = () => {
+    if (typeof onDelete == 'function') {
+      const ids = selectedKeys.map(index => {
+        return imageList[index].id
+      })
+      onDelete(ids)
+    }
+  }
 
   const handlePageChange = (page: number, pageSize: number) => {
     onPageChange(page, pageSize)
-    setSelectKeys([])
+    setSelectedKeys([])
   }
 
-  const renderUploadButton = (): any => {
+  const renderUploadButton = (): React.ReactNode => {
     return uploadProps ? (
       <Upload {...uploadProps}>
         <Button>上传图片</Button>
@@ -70,12 +84,12 @@ const PictureList: FC<PictureListProps> = ({
     <div className="picture">
       <div className="picture-button">{renderUploadButton()}</div>
       <div className="picture-list">
-        {imageList.map((item, index) => {
+        {imageList.map((item, key) => {
           return (
             <div
-              className={`picture-list-item ${isSelect(index) ? 'picture-list-item__acitve' : ''} `}
-              key={index}
-              onClick={() => handleSelect(index)}
+              className={`picture-list-item ${selectedKeys.includes(key) ? 'picture-list-item__acitve' : ''} `}
+              key={key}
+              onClick={() => handleSelectItem(key)}
             >
               <div
                 className="picture-list-item__cover"
@@ -93,13 +107,19 @@ const PictureList: FC<PictureListProps> = ({
       </div>
       <div className="footer">
         <div className="footer-select">
-          {selectKeys.length > 0 ?? (
+          {selectedKeys.length > 0 ? (
             <>
-              <span className="footer-select__text">已选择 {selectKeys.length}项</span>
-              <Button size="small" onClick={() => handleDelete()}>
-                删除
-              </Button>
+              <span className="footer-select__text">已选择 {selectedKeys.length}项</span>
+              {typeof onDelete == 'function' ? (
+                <Button size="small" onClick={() => handleDelete()}>
+                  删除
+                </Button>
+              ) : (
+                ''
+              )}
             </>
+          ) : (
+            <></>
           )}
         </div>
         <div className="footer-page">

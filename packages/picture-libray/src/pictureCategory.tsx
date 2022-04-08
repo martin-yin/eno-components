@@ -16,13 +16,21 @@ export interface PictureCategoryProps {
    * @description 添加左侧分类回调
    */
   onCategoryAdd?: (category: string) => void
+
+  setSelectedKeys: (index: Array<number>) => void
 }
 
-const PictureCategory: FC<PictureCategoryProps> = ({ categoryList, onCategoryChange, onCategoryAdd = noop }) => {
+const PictureCategory: FC<PictureCategoryProps> = ({
+  categoryList,
+  onCategoryChange,
+  onCategoryAdd = noop,
+  setSelectedKeys
+}) => {
   const [selectIndex, setSelectIndex] = useState(0)
 
   const handleSelectIndex = (item: string, index: number) => {
     setSelectIndex(index)
+    setSelectedKeys([])
     onCategoryChange(item)
   }
   const onFinish = (value: any) => {

@@ -46,9 +46,13 @@ export default () => {
     await getImageList()
   }
 
-  const handleOk = (keys: string[]) => {
-    message.success(`当前选中的 image index ${keys.toString()}`)
+  const handleOk = keys => {
+    console.log(keys, '===')
     setIsModalVisible(false)
+  }
+
+  const handleDelete = keys => {
+    console.log(keys, '===')
   }
 
   const handleCancel = () => {
@@ -61,6 +65,7 @@ export default () => {
       console.log(category)
     },
     onCategoryAdd: () => {},
+    onDelete: handleDelete,
     categoryList: category,
     onPageChange: handlePageChange,
     imageList: imageList,
