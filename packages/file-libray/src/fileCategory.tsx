@@ -1,27 +1,17 @@
 import { Button, Form, Input, Popover } from 'antd'
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
+import { useFileCategory } from './hooks/useFileCategory'
 
 export interface FileCategoryProps {
-  categoryList: Array<string>
-  onCategoryChange: (category: string, index: number) => void
+  onCategoryChange?: (category: string, index: number) => void
   onCategoryAdd?: (category: string) => void
 }
 
-const FileCategory: FC<FileCategoryProps> = ({ categoryList, onCategoryChange, onCategoryAdd }) => {
-  const [selectIndex, setSelectIndex] = useState(0)
-
-  const handleSelectIndex = (item: string, index: number) => {
-    setSelectIndex(index)
-    onCategoryChange?.(item, index)
-  }
-
-  const onFinish = (value: { category: string }) => {
-    onCategoryAdd?.(value.category)
-  }
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
-  }
+const FileCategory: FC<FileCategoryProps> = props => {
+  const { categoryList, handleCategoryChange, selectIndex, onFinish, onFinishFailed } = useFileCategory(
+    props.onCategoryChange,
+    props.onCategoryAdd
+  )
 
   const categoryAdd = (
     <>
@@ -44,6 +34,7 @@ const FileCategory: FC<FileCategoryProps> = ({ categoryList, onCategoryChange, o
       </Form>
     </>
   )
+
   return (
     <div className="category">
       <div className="category-menu">
@@ -51,7 +42,7 @@ const FileCategory: FC<FileCategoryProps> = ({ categoryList, onCategoryChange, o
           return (
             <div
               key={index}
-              onClick={() => handleSelectIndex(item, index)}
+              onClick={() => handleCategoryChange(item, index)}
               className={`category-menu__item ${index === selectIndex ? 'category-menu__item-current' : ''}`}
             >
               <p className="category-menu__item-title text-hide">{item}</p>
