@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FileCategoryProps } from '../fileCategory'
+import { FileCategoryProps } from '../interface'
 import { useFileLibrayContext } from '../fileLibrayProvider'
 
 export const useFileCategory = (

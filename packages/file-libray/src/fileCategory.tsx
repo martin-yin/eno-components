@@ -1,11 +1,7 @@
 import { Button, Form, Input, Popover } from 'antd'
 import React, { FC } from 'react'
 import { useFileCategory } from './hooks/useFileCategory'
-
-export interface FileCategoryProps {
-  onCategoryChange?: (category: string, index: number) => void
-  onCategoryAdd?: (category: string) => void
-}
+import { FileCategoryProps } from './interface'
 
 const FileCategory: FC<FileCategoryProps> = props => {
   const { categoryList, handleCategoryChange, selectIndex, onFinish, onFinishFailed } = useFileCategory(
@@ -13,7 +9,7 @@ const FileCategory: FC<FileCategoryProps> = props => {
     props.onCategoryAdd
   )
 
-  const categoryAdd = (
+  const categoryAddRender = (
     <>
       <Form
         name="basic"
@@ -38,20 +34,21 @@ const FileCategory: FC<FileCategoryProps> = props => {
   return (
     <div className="category">
       <div className="category-menu">
-        {categoryList.map((item, index) => {
-          return (
-            <div
-              key={index}
-              onClick={() => handleCategoryChange(item, index)}
-              className={`category-menu__item ${index === selectIndex ? 'category-menu__item-current' : ''}`}
-            >
-              <p className="category-menu__item-title text-hide">{item}</p>
-            </div>
-          )
-        })}
+        {categoryList &&
+          categoryList.map((item, index) => {
+            return (
+              <div
+                key={index}
+                onClick={() => handleCategoryChange(item, index)}
+                className={`category-menu__item ${index === selectIndex ? 'category-menu__item-current' : ''}`}
+              >
+                <p className="category-menu__item-title text-hide">{item}</p>
+              </div>
+            )
+          })}
       </div>
       <div className="category-button">
-        <Popover trigger="click" content={categoryAdd}>
+        <Popover trigger="click" content={categoryAddRender}>
           新增分类
         </Popover>
       </div>

@@ -1,10 +1,12 @@
 import { PaginationProps, UploadProps } from 'antd'
 import { HttpRequestHeader } from 'antd/lib/upload/interface'
-import { FileCategoryProps } from 'src/fileCategory'
 
 export interface FileType {
   fileName: string
-  fileUrl: string
+  domain: string
+  filePath: string
+  previewUrl: string
+  externalUrl: string
   id: number
 }
 
@@ -21,10 +23,17 @@ export type CategoryListType = Array<string>
 export type PaginationType = Pick<PaginationProps, 'total' | 'current'>
 
 // 文件类型
-export enum FILETYPE {
+export enum FileTypeEnum {
   IMAGE,
   VIDEO,
   ANNEX
+}
+
+export interface FileResponse {
+  category: CategoryListType
+  list: FileListType
+  page: number
+  total: number
 }
 
 export interface Params {
@@ -33,7 +42,7 @@ export interface Params {
   category: string
 }
 
-export interface FileLibrayProps<T = any> {
+export interface FileLibrayProps<T = FileResponse> {
   /**
    * @description 组件是否显示
    */
@@ -57,7 +66,7 @@ export interface FileLibrayProps<T = any> {
   /**
    * @description 接口请求成功时回调
    */
-  onSuccess?: (value: T) => void
+  onSuccess?: (value: T) => FileResponse
   /**
    * @description 接口请求失败时回调
    */
@@ -65,13 +74,13 @@ export interface FileLibrayProps<T = any> {
   /**
    * @description 文件类型
    */
-  fileType: FILETYPE
+  fileType: FileTypeEnum
   /**
    * @description 分类
    */
   category?: FileCategoryProps
   /**
-   * @description antd 上传组件 UploadProps，如果不传递则不显示上传按钮
+   * @description antd 上传组件 UploadProps，不传递则不显示上传按钮
    */
   upload?: UploadProps
   /**
@@ -79,7 +88,7 @@ export interface FileLibrayProps<T = any> {
    */
   pagination?: PaginationProps
   /**
-   * @description  删除文件回调，如果不传递则不显示删除按钮
+   * @description  删除文件回调，不传递则不显示删除按钮
    */
   onDelete?: (ids: Array<number>) => void
 }
@@ -88,4 +97,9 @@ export interface FileListProps {
   upload?: UploadProps
   onDelete?: (ids: Array<number>) => void
   pagination?: PaginationProps
+}
+
+export interface FileCategoryProps {
+  onCategoryChange?: (category: string, index: number) => void
+  onCategoryAdd?: (category: string) => void
 }

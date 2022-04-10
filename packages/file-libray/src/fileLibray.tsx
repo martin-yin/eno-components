@@ -1,4 +1,4 @@
-import { Button, Input, Modal, Pagination } from 'antd'
+import { Button, Input, Modal, Pagination, Spin } from 'antd'
 import React, { FC } from 'react'
 import FileCategory from './fileCategory'
 import { FileLibrayProvider, useFileLibrayContext } from './fileLibrayProvider'
@@ -14,9 +14,9 @@ const { Search } = Input
 
 const FileLibray: FC<FileLibrayProps> = props => {
   const FileLibrayRender: FC<FileLibrayProps> = props => {
-    const { visible, onCancel, category, onDelete, pagination } = props
+    const { visible, onCancel, category, onDelete, pagination, fileType } = props
 
-    useFileData(props.requestUrl, props.headers)
+    const { loading } = useFileData(props.requestUrl, props.headers)
 
     const { selectedKeys } = useFileLibrayContext()
     const { handleOk, title } = useFileLibray(props)
@@ -34,47 +34,49 @@ const FileLibray: FC<FileLibrayProps> = props => {
         onOk={handleOk}
         onCancel={onCancel}
       >
-        <div className="file-libray">
-          <FileCategory {...category} />
-          <div className="file">
-            <div className="file-header">
-              <div className="file-header__search">
-                <Search placeholder="请输入文件名称" onSearch={handleSearch} style={{ width: 200 }} />
+        <Spin tip="加载中..." spinning={loading}>
+          <div className="file-libray">
+            <FileCategory {...category} />
+            <div className="file">
+              <div className="file-header">
+                <div className="file-header__search">
+                  <Search placeholder="请输入文件名称" onSearch={handleSearch} style={{ width: 200 }} />
+                </div>
+                <div className="file-header__button">{renderUploadButton()}</div>
               </div>
-              <div className="file-header__button">{renderUploadButton()}</div>
-            </div>
-            <FileList />
-            <div className="footer">
-              <div className="footer-select">
-                {selectedKeys.length > 0 ? (
-                  <>
-                    <span className="footer-select__text">已选择 {selectedKeys.length}项</span>
-                    {onDelete ? (
-                      <Button size="small" onClick={() => handleDelete()}>
-                        删除
-                      </Button>
-                    ) : (
-                      ''
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </div>
-              <div className="footer-page">
-                <Pagination
-                  {...pagination}
-                  showSizeChanger={false}
-                  defaultPageSize={16}
-                  size="small"
-                  total={paginate.total}
-                  current={paginate.current}
-                  onChange={handlePageChange}
-                />
+              <FileList fileType={fileType} />
+              <div className="footer">
+                <div className="footer-select">
+                  {selectedKeys.length > 0 ? (
+                    <>
+                      <span className="footer-select__text">已选择 {selectedKeys.length}项</span>
+                      {onDelete ? (
+                        <Button size="small" onClick={() => handleDelete()}>
+                          删除
+                        </Button>
+                      ) : (
+                        ''
+                      )}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className="footer-page">
+                  <Pagination
+                    {...pagination}
+                    showSizeChanger={false}
+                    defaultPageSize={16}
+                    size="small"
+                    total={paginate.total}
+                    current={paginate.current}
+                    onChange={handlePageChange}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </Spin>
       </Modal>
     )
   }
