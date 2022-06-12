@@ -1,10 +1,10 @@
 import { CheckOutlined } from '@ant-design/icons'
 import { FC } from 'react'
-import { useFileList } from '../hooks/useFileList'
+import { useFileLibrayList } from '../hooks/useFileLibrayList'
 import { FileLibrayListProps, FileLibrayTypeEnum } from '../interface'
 
 const FileLibrayList: FC<FileLibrayListProps> = ({ fileType, fileList }) => {
-  const { handleSelectItem, selectedKeys } = useFileList()
+  const { handleSelectItem, selectedKeys } = useFileLibrayList()
 
   return (
     <div className="file-list">

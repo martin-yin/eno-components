@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useFileLibrayContext } from '../provider/provider'
-import { FileCategoryProps } from '../interface'
+import { FileLibrayCategoryProps } from '../interface'
 import { FormInstance } from 'antd'
 
-export const useFileCategory = (
+export const useFileLibrayCategory = (
   form: FormInstance<{ category: string }>,
-  onCategoryChange?: FileCategoryProps['onCategoryChange'],
-  onCategoryAdd?: FileCategoryProps['onCategoryAdd']
+  onCategoryChange?: FileLibrayCategoryProps['onCategoryChange'],
+  onCategoryAdd?: FileLibrayCategoryProps['onCategoryAdd']
 ) => {
   const [selectIndex, setSelectIndex] = useState(0)
 

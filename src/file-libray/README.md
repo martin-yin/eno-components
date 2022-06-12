@@ -21,7 +21,6 @@ group:
 import React, { useState, useEffect } from 'react'
 import PictureLibray, { FileLibrayProps, FileLibrayTypeEnum } from './src/index'
 import { message, Button } from 'antd'
-import axios from 'axios'
 
 export default () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -90,7 +89,6 @@ export default () => {
 import React, { useState, useEffect } from 'react'
 import PictureLibray, { FileLibrayProps, FileLibrayTypeEnum } from './src/index'
 import { message, Button } from 'antd'
-import axios from 'axios'
 
 export default () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -153,4 +151,3 @@ export default () => {
 }
 ```
 
-<API src="./src/index.ts" />

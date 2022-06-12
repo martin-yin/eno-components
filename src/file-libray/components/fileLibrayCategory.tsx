@@ -1,19 +1,19 @@
 import { Button, Form, Input, Popover } from 'antd'
 import { FC } from 'react'
-import { useFileCategory } from '../hooks/useFileCategory'
-import { FileCategoryProps } from '../interface'
+import { useFileLibrayCategory } from '../hooks/useFileLibrayCategory'
+import { FileLibrayCategoryProps } from '../interface'
 
-const FileLibrayCategory: FC<FileCategoryProps> = props => {
+const FileLibrayCategory: FC<FileLibrayCategoryProps> = props => {
   const { onCategoryChange, onCategoryAdd, categoryList } = props
   const [form] = Form.useForm<{ category: string }>()
 
-  const { handleCategoryChange, selectIndex, onFinish, onFinishFailed } = useFileCategory(
+  const { handleCategoryChange, selectIndex, onFinish, onFinishFailed } = useFileLibrayCategory(
     form,
     onCategoryChange,
     onCategoryAdd
   )
 
-  const categoryAddRender = (
+  const categoryAdd = (
     <Form
       name="basic"
       labelCol={{ span: 6 }}
@@ -51,7 +51,7 @@ const FileLibrayCategory: FC<FileCategoryProps> = props => {
           })}
       </div>
       <div className="category-button">
-        <Popover trigger="click" content={categoryAddRender}>
+        <Popover trigger="click" content={categoryAdd}>
           新增分类
         </Popover>
       </div>

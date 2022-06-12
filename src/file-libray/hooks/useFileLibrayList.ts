@@ -1,7 +1,6 @@
 import { useFileLibrayContext } from '../provider/provider'
 import { SelectedKeysType } from '../interface'
-
-export const useFileList = () => {
+export const useFileLibrayList = () => {
   const { selectedKeys, updateSelectedKeys } = useFileLibrayContext()
 
   const handleSelectItem = (key: number) => {

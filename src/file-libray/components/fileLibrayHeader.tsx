@@ -1,7 +1,7 @@
 import { Button, Input, Upload } from 'antd'
 import { FC } from 'react'
-import { useFileLibrayContext } from '../provider/provider'
 import { FileLibrayHeaderProps } from '../interface'
+import { useFileLibrayContext } from '../provider/provider'
 
 const { Search } = Input
 
@@ -9,12 +9,13 @@ const FileLibrayHeader: FC<FileLibrayHeaderProps> = props => {
   const { upload, onSearch } = props
 
   const { updateSelectedKeys } = useFileLibrayContext()
+
   const handleSearch = (fileName: string) => {
     onSearch?.(fileName)
     updateSelectedKeys([])
   }
 
-  const renderUploadButton = (): React.ReactNode => {
+  const uploadButton = (): React.ReactNode => {
     if (upload) {
       if (upload.onChange) {
       }
@@ -31,7 +32,7 @@ const FileLibrayHeader: FC<FileLibrayHeaderProps> = props => {
       <div className="file-header__search">
         <Search placeholder="请输入文件名称" onSearch={handleSearch} style={{ width: 200 }} />
       </div>
-      <div className="file-header__button">{renderUploadButton()}</div>
+      <div className="file-header__button">{uploadButton()}</div>
     </div>
   )
 }

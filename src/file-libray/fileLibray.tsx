@@ -2,7 +2,7 @@ import { Modal } from 'antd'
 import { FC } from 'react'
 import { FileCategory, FileLibrayFooter, FileLibrayHeader, FileLibrayList } from './components'
 import { useFileLibray } from './hooks/useFileLibray'
-import './index.less'
+// import './index.less'
 import { FileLibrayProps } from './interface'
 import { FileLibrayProvider, useFileLibrayContext } from './provider/provider'
 

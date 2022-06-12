@@ -1,5 +1,8 @@
 import { PaginationProps, UploadProps } from 'antd'
 
+/**
+ * 选中项
+ */
 export type SelectedKeysType = Array<number>
 
 // 文件类型
@@ -31,7 +34,7 @@ export type FileLibrayProps = {
     /**
      * @description 分类
      */
-    category: FileCategoryProps
+    category: FileLibrayCategoryProps
   } & FileLibrayListProps
 
 export type FileLibrayHeaderProps = {
@@ -58,8 +61,13 @@ export type FileLibrayFooterProps = {
   fileList: FileListType
 }
 
+/**
+ * 文件类型
+ */
 export type FileListType = Array<FileType>
-
+/**
+ * 文件类型
+ */
 export type FileType = {
   fileName: string
   domain: string
@@ -80,7 +88,7 @@ export type FileLibrayListProps = {
   fileList: FileListType
 }
 
-export type FileCategoryProps = {
+export type FileLibrayCategoryProps = {
   categoryList: string[]
   onCategoryChange?: (category: string, index: number) => void
   onCategoryAdd?: (category: string) => void
