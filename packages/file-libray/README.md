@@ -19,20 +19,20 @@ group:
 
 ```tsx
 import React, { useState, useEffect } from 'react'
-import PictureLibray, { FileLibrayProps } from './src/index'
+import PictureLibray, { FileLibrayProps, FileLibrayTypeEnum } from './src/index'
 import { message, Button } from 'antd'
 import axios from 'axios'
 
 export default () => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
 
   const showModal = () => {
-    setIsModalVisible(true)
+    setModalVisible(true)
   }
 
   const handleOk = keys => {
     console.log(keys, '===')
-    setIsModalVisible(false)
+    setModalVisible(false)
   }
 
   const handleDelete = keys => {
@@ -40,16 +40,37 @@ export default () => {
   }
 
   const handleCancel = () => {
-    setIsModalVisible(false)
+    setModalVisible(false)
   }
 
-  const props = {
-    visible: isModalVisible,
+  const props: FileLibrayProps = {
+    visible: modalVisible,
     onCancel: handleCancel,
     onDelete: handleDelete,
     onOk: handleOk,
-    requestUrl: 'https://www.fastmock.site/mock/41fa03b4c7422029e00ec4ee0c8063d2/api/api/imageList',
-    fileType: 0
+    fileType: FileLibrayTypeEnum.IMAGE,
+    pagination: {
+      total: 30
+    },
+    category: {
+      categoryList: ['相册1', '相册2']
+    },
+    fileList: [
+      {
+        fileName: 'Lisa Robinson',
+        previewUrl: 'http://dummyimage.com/200x200/50B347/FFF&text=FastMock',
+        filePath: 'filePath',
+        domain: 'http://dummyimage.com',
+        id: '650000200202037870'
+      },
+      {
+        fileName: 'Kimberly Miller',
+        previewUrl: 'http://dummyimage.com/200x200/50B347/FFF&text=FastMock',
+        filePath: 'filePath',
+        domain: 'http://dummyimage.com',
+        id: '81000019860128967X'
+      }
+    ]
   }
 
   return (
@@ -67,20 +88,20 @@ export default () => {
 
 ```tsx
 import React, { useState, useEffect } from 'react'
-import PictureLibray, { FileLibrayProps } from './src/index'
+import PictureLibray, { FileLibrayProps, FileLibrayTypeEnum } from './src/index'
 import { message, Button } from 'antd'
 import axios from 'axios'
 
 export default () => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
 
   const showModal = () => {
-    setIsModalVisible(true)
+    setModalVisible(true)
   }
 
   const handleOk = keys => {
     console.log(keys, '===')
-    setIsModalVisible(false)
+    setModalVisible(false)
   }
 
   const handleDelete = keys => {
@@ -88,19 +109,39 @@ export default () => {
   }
 
   const handleCancel = () => {
-    setIsModalVisible(false)
+    setModalVisible(false)
   }
 
-  const props = {
-    visible: isModalVisible,
+  const props: FileLibrayProps = {
+    visible: modalVisible,
     onCancel: handleCancel,
     onDelete: handleDelete,
     onOk: handleOk,
-    requestUrl: 'https://www.fastmock.site/mock/41fa03b4c7422029e00ec4ee0c8063d2/eno-component/api/video',
-    fileType: 1,
-    upload: {}
-  }
+    fileType: FileLibrayTypeEnum.VIDEO,
+    pagination: {
+      total: 30
+    },
 
+    category: {
+      categoryList: ['视频文件夹1', '视频文件夹2']
+    },
+    fileList: [
+      {
+        fileName: 'Lisa Robinson',
+        previewUrl: 'http://dummyimage.com/200x200/50B347/FFF&text=FastMock',
+        filePath: 'filePath',
+        domain: 'http://dummyimage.com',
+        id: '650000200202037870'
+      },
+      {
+        fileName: 'Kimberly Miller',
+        previewUrl: 'http://dummyimage.com/200x200/50B347/FFF&text=FastMock',
+        filePath: 'filePath',
+        domain: 'http://dummyimage.com',
+        id: '81000019860128967X'
+      }
+    ]
+  }
   return (
     <div>
       <Button type="primary" onClick={showModal}>

@@ -1,10 +1,9 @@
-import { Button, Upload } from 'antd'
-import { useFileLibrayContext } from '../fileLibrayProvider'
 import { FileLibrayProps, FileListType } from '../interface'
+import { useFileLibrayContext } from '../provider/provider'
 
 export const useFileLibray = (props: FileLibrayProps) => {
-  const { onOk, upload, fileType } = props
-  const { params, fileList, selectedKeys, updateSelectedKeys, updateParams } = useFileLibrayContext()
+  const { onOk, fileType, fileList, onSearch } = props
+  const { selectedKeys, updateSelectedKeys } = useFileLibrayContext()
 
   const handleOk = () => {
     const selectedImages: FileListType = []
@@ -17,27 +16,13 @@ export const useFileLibray = (props: FileLibrayProps) => {
 
   const handleSearch = (fileName: string) => {
     updateSelectedKeys([])
-    updateParams({ ...params, fileName })
-  }
-
-  const renderUploadButton = (): React.ReactNode => {
-    if (upload) {
-      // Todo: 做一层兼容
-      if (upload.onChange) {
-      }
-      return (
-        <Upload {...upload} showUploadList={false}>
-          <Button>上传</Button>
-        </Upload>
-      )
-    }
+    onSearch?.(fileName)
   }
 
   const title = ['图片', '视频', '附件'][fileType]
 
   return {
     handleOk,
-    renderUploadButton,
     handleSearch,
     title
   }

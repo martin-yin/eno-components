@@ -1,48 +1,15 @@
 import { PaginationProps, UploadProps } from 'antd'
-import { HttpRequestHeader } from 'antd/lib/upload/interface'
-
-export interface FileType {
-  fileName: string
-  domain: string
-  filePath: string
-  previewUrl: string
-  externalUrl: string
-  id: number
-}
-
-export type FileListType = Array<FileType>
-
-export interface Params {
-  page: number
-  fileName: string
-  category: string
-}
 
 export type SelectedKeysType = Array<number>
-export type CategoryListType = Array<string>
-export type PaginationType = Pick<PaginationProps, 'total' | 'current'>
 
 // 文件类型
-export enum FileTypeEnum {
+export enum FileLibrayTypeEnum {
   IMAGE,
   VIDEO,
   ANNEX
 }
 
-export interface FileResponse {
-  category: CategoryListType
-  list: FileListType
-  page: number
-  total: number
-}
-
-export interface Params {
-  page: number
-  fileName: string
-  category: string
-}
-
-export interface FileLibrayProps<T = FileResponse> {
+export type FileLibrayProps = {
   /**
    * @description 组件是否显示
    */
@@ -56,50 +23,65 @@ export interface FileLibrayProps<T = FileResponse> {
    */
   onCancel?: () => void
   /**
-   * @description 请求接口
+   * @description antd 上传组件 UploadProps，不传递则不显示上传按钮
    */
-  requestUrl: string
-  /**
-   * @description axios请求头
-   */
-  headers?: HttpRequestHeader
-  /**
-   * @description 接口请求成功时回调
-   */
-  onSuccess?: (value: T) => FileResponse
-  /**
-   * @description 接口请求失败时回调
-   */
-  onFail?: (value: any) => void
-  /**
-   * @description 文件类型
-   */
-  fileType: FileTypeEnum
-  /**
-   * @description 分类
-   */
-  category?: FileCategoryProps
+  upload?: UploadProps
+} & FileLibrayHeaderProps &
+  FileLibrayFooterProps & {
+    /**
+     * @description 分类
+     */
+    category: FileCategoryProps
+  } & FileLibrayListProps
+
+export type FileLibrayHeaderProps = {
   /**
    * @description antd 上传组件 UploadProps，不传递则不显示上传按钮
    */
   upload?: UploadProps
   /**
+   * @description 搜索回调
+   */
+  onSearch?: (value: string) => void
+}
+
+export type FileLibrayFooterProps = {
+  /**
    * @description antd 分页组件props
    */
-  pagination?: PaginationProps
+  pagination: PaginationProps
   /**
    * @description  删除文件回调，不传递则不显示删除按钮
    */
   onDelete?: (ids: Array<number>) => void
+
+  fileList: FileListType
 }
 
-export interface FileListProps {
-  upload?: UploadProps
-  onDelete?: (ids: Array<number>) => void
-  pagination?: PaginationProps
+export type FileListType = Array<FileType>
+
+export type FileType = {
+  fileName: string
+  domain: string
+  filePath: string
+  previewUrl: string
+  externalUrl: string
+  id: number
 }
 
-export interface FileCategoryProps {
+export type FileLibrayListProps = {
+  /**
+   * @description 文件类型
+   */
+  fileType: FileLibrayTypeEnum
+  /**
+   * @description 文件列表
+   */
+  fileList: FileListType
+}
+
+export type FileCategoryProps = {
+  categoryList: string[]
   onCategoryChange?: (category: string, index: number) => void
   onCategoryAdd?: (category: string) => void
 }

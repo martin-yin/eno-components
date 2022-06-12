@@ -1,27 +1,16 @@
-import { Button, Input, Modal, Pagination, Spin } from 'antd'
-import React, { FC } from 'react'
-import FileCategory from './fileCategory'
-import { FileLibrayProvider, useFileLibrayContext } from './fileLibrayProvider'
-import FileList from './fileList'
-import { useFileData } from './hooks/useFileData'
+import { Modal } from 'antd'
+import { FC } from 'react'
+import { FileCategory, FileLibrayFooter, FileLibrayHeader, FileLibrayList } from './components'
 import { useFileLibray } from './hooks/useFileLibray'
-import { useFileLibrayFooter } from './hooks/useFileLibrayFooter'
-import { useFileLibrayHeader } from './hooks/useFileLibrayHeader'
 import './index.less'
 import { FileLibrayProps } from './interface'
-
-const { Search } = Input
+import { FileLibrayProvider, useFileLibrayContext } from './provider/provider'
 
 const FileLibray: FC<FileLibrayProps> = props => {
   const FileLibrayRender: FC<FileLibrayProps> = props => {
-    const { visible, onCancel, category, onDelete, pagination, fileType } = props
-
-    const { loading } = useFileData(props.requestUrl, props.headers)
-
-    const { selectedKeys } = useFileLibrayContext()
+    const { visible, fileList, onCancel, category, onDelete, pagination, fileType, upload, onSearch } = props
+    const { updateSelectedKeys } = useFileLibrayContext()
     const { handleOk, title } = useFileLibray(props)
-    const { handleDelete, handlePageChange, paginate } = useFileLibrayFooter(props.pagination, props.onDelete)
-    const { handleSearch, renderUploadButton } = useFileLibrayHeader(props)
 
     return (
       <Modal
@@ -32,51 +21,19 @@ const FileLibray: FC<FileLibrayProps> = props => {
         visible={visible}
         width={866}
         onOk={handleOk}
-        onCancel={onCancel}
+        onCancel={() => {
+          onCancel?.()
+          updateSelectedKeys([])
+        }}
       >
-        <Spin tip="加载中..." spinning={loading}>
-          <div className="file-libray">
-            <FileCategory {...category} />
-            <div className="file">
-              <div className="file-header">
-                <div className="file-header__search">
-                  <Search placeholder="请输入文件名称" onSearch={handleSearch} style={{ width: 200 }} />
-                </div>
-                <div className="file-header__button">{renderUploadButton()}</div>
-              </div>
-              <FileList fileType={fileType} />
-              <div className="footer">
-                <div className="footer-select">
-                  {selectedKeys.length > 0 ? (
-                    <>
-                      <span className="footer-select__text">已选择 {selectedKeys.length}项</span>
-                      {onDelete ? (
-                        <Button size="small" onClick={() => handleDelete()}>
-                          删除
-                        </Button>
-                      ) : (
-                        ''
-                      )}
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-                <div className="footer-page">
-                  <Pagination
-                    {...pagination}
-                    showSizeChanger={false}
-                    defaultPageSize={16}
-                    size="small"
-                    total={paginate.total}
-                    current={paginate.current}
-                    onChange={handlePageChange}
-                  />
-                </div>
-              </div>
-            </div>
+        <div className="file-libray">
+          <FileCategory {...category} />
+          <div className="file">
+            <FileLibrayHeader upload={upload} onSearch={onSearch} />
+            <FileLibrayList fileType={fileType} fileList={fileList} />
+            <FileLibrayFooter pagination={pagination} onDelete={onDelete} fileList={fileList}></FileLibrayFooter>
           </div>
-        </Spin>
+        </div>
       </Modal>
     )
   }

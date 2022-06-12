@@ -1,4 +1,6 @@
 import FileLibray from './fileLibray'
 
-export type { FileLibrayProps, FILETYPE } from './fileLibray'
+import { FileLibrayProps, FileLibrayTypeEnum } from './interface'
+
+export { FileLibrayProps, FileLibrayTypeEnum }
 export default FileLibray

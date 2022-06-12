@@ -1,10 +1,10 @@
 import { CheckOutlined } from '@ant-design/icons'
-import React, { FC } from 'react'
-import { useFileList } from './hooks/useFileList'
-import { FileTypeEnum } from './interface'
+import { FC } from 'react'
+import { useFileList } from '../hooks/useFileList'
+import { FileLibrayListProps, FileLibrayTypeEnum } from '../interface'
 
-const FileList: FC<{ fileType: FileTypeEnum }> = ({ fileType }) => {
-  const { fileList, handleSelectItem, selectedKeys } = useFileList()
+const FileLibrayList: FC<FileLibrayListProps> = ({ fileType, fileList }) => {
+  const { handleSelectItem, selectedKeys } = useFileList()
 
   return (
     <div className="file-list">
@@ -20,7 +20,7 @@ const FileList: FC<{ fileType: FileTypeEnum }> = ({ fileType }) => {
                 className="file-list-item__cover"
                 style={{
                   background: `url(${item.previewUrl}) no-repeat 50% / 100%`,
-                  width: fileType === FileTypeEnum.VIDEO ? '55px' : '95px'
+                  width: fileType === FileLibrayTypeEnum.VIDEO ? '55px' : '95px'
                 }}
               ></div>
               <p className="file-list-item__name text-hide">{item.fileName}</p>
@@ -34,6 +34,6 @@ const FileList: FC<{ fileType: FileTypeEnum }> = ({ fileType }) => {
   )
 }
 
-FileList.displayName = 'FileList'
+FileLibrayList.displayName = 'FileLibrayList'
 
-export default FileList
+export default FileLibrayList
