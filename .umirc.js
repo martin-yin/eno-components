@@ -1,16 +1,7 @@
-import { readdirSync } from 'fs';
-import { join } from 'path';
-
-const headPkgList = [];
-
-const pkgList = readdirSync(join(__dirname, 'packages')).filter(
-  (pkg) => pkg.charAt(0) !== '.' && !headPkgList.includes(pkg),
-);
-
-const pkgComponents = pkgList
-  .map((path) => [join('packages', path), join('packages', path, 'src'), join('packages', path, 'src', 'components')])
-  .reduce((acc, val) => acc.concat(val), []);
-
+import path from 'path';
+export function resolve(...paths) {
+  return path.resolve(__dirname, '..', ...paths);
+}
 
 export default {
   title: 'Eno Components',
@@ -33,7 +24,7 @@ export default {
     },
   ],
   resolve: {
-    includes: [...pkgComponents, 'docs'],
+    includes: ['src','docs'],
   },
   navs: [
     null,

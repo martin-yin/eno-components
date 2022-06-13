@@ -10,7 +10,7 @@
     "build:docs": "dumi build",
     "format": "prettier --write src/**/*.{js,tsx,ts,md,json}",
     "prepare": "husky install",
-    "build": "rollup -c "
+    "build": "rollup -c"
   },
   "author": "martin-yin",
   "license": "MIT",
@@ -19,11 +19,11 @@
     "react": "^18.0.0"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "react": "^18.0.0",
     "antd": "^4.19.5"
   },
   "devDependencies": {
-    "@ant-design/icons": "^4.7.0",
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
     "@umijs/plugin-esbuild": "^1.4.1",

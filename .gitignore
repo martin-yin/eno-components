@@ -25,4 +25,7 @@ yarn-error.log*
 .umi-production
 /dist
 /.umi
+
+/src/.umi
+
 /docs-dist

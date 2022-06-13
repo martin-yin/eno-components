@@ -19,7 +19,7 @@ group:
 
 ```tsx
 import React, { useState, useEffect } from 'react'
-import PictureLibray, { FileLibrayProps, FileLibrayTypeEnum } from './src/index'
+import PictureLibray, { FileLibrayProps } from './index'
 import { message, Button } from 'antd'
 
 export default () => {
@@ -47,7 +47,7 @@ export default () => {
     onCancel: handleCancel,
     onDelete: handleDelete,
     onOk: handleOk,
-    fileType: FileLibrayTypeEnum.IMAGE,
+    fileType: 0,
     pagination: {
       total: 30
     },
@@ -87,7 +87,7 @@ export default () => {
 
 ```tsx
 import React, { useState, useEffect } from 'react'
-import PictureLibray, { FileLibrayProps, FileLibrayTypeEnum } from './src/index'
+import PictureLibray, { FileLibrayProps } from './index'
 import { message, Button } from 'antd'
 
 export default () => {
@@ -115,7 +115,7 @@ export default () => {
     onCancel: handleCancel,
     onDelete: handleDelete,
     onOk: handleOk,
-    fileType: FileLibrayTypeEnum.VIDEO,
+    fileType: 1,
     pagination: {
       total: 30
     },
@@ -151,3 +151,4 @@ export default () => {
 }
 ```
 
+<API src="./index.ts" />
