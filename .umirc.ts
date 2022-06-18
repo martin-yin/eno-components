@@ -1,10 +1,7 @@
-import path from 'path';
-export function resolve(...paths) {
-  return path.resolve(__dirname, '..', ...paths);
-}
-
-export default {
-  title: 'Eno Components',
+import { defineConfig } from 'dumi';
+const repo = 'eno-components';
+export default defineConfig({
+  title: repo,
   mode: 'site',
   logo: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg',
   extraBabelPlugins: [
@@ -23,18 +20,15 @@ export default {
       content: '#1890ff',
     },
   ],
-  resolve: {
-    includes: ['src','docs'],
-  },
   navs: [
     null,
     {
       title: 'Github',
-      path: 'https://github.com/martin-yin/eno-components',
+      path: `https://github.com/martin-yin/${repo}`,
     },
   ],
-  base: '/eno-components',
-  publicPath: '/eno-components/',
+  base: `/${repo}/`,
+  publicPath: `/${repo}/`,
   hash: true,
   theme: {
     '@s-site-menu-width': '258px',
@@ -44,4 +38,4 @@ export default {
   headScripts: ['https://gw.alipayobjects.com/os/antfincdn/fdj3WlJd5c/darkreader.js'],
   externals: { darkreader: 'window.DarkReader' },
   mfsu:{},
-};
+});

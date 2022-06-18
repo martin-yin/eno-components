@@ -19,7 +19,7 @@ group:
 
 ```tsx
 import React, { useState, useEffect } from 'react'
-import PictureLibray, { FileLibrayProps } from './index'
+import { FileLibray, FileLibrayProps } from 'eno-components'
 import { message, Button } from 'antd'
 
 export default () => {
@@ -77,7 +77,7 @@ export default () => {
       <Button type="primary" onClick={showModal}>
         选择文件
       </Button>
-      <PictureLibray {...props}></PictureLibray>
+      <FileLibray {...props} />
     </div>
   )
 }
@@ -87,7 +87,7 @@ export default () => {
 
 ```tsx
 import React, { useState, useEffect } from 'react'
-import PictureLibray, { FileLibrayProps } from './index'
+import { FileLibray, FileLibrayProps } from 'eno-components'
 import { message, Button } from 'antd'
 
 export default () => {
@@ -145,7 +145,7 @@ export default () => {
       <Button type="primary" onClick={showModal}>
         选择文件
       </Button>
-      <PictureLibray {...props}></PictureLibray>
+      <FileLibray {...props} />
     </div>
   )
 }
