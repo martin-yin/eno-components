@@ -1,5 +1,5 @@
 import { Button, Form, Input, Popover } from 'antd'
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { useFileLibrayCategory } from '../hooks/useFileLibrayCategory'
 import { FileLibrayCategoryProps } from '../interface'
 

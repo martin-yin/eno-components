@@ -1,2 +1,2 @@
-export type { FileLibrayProps, FileLibrayTypeEnum } from './fileLibray'
+export type { FileLibrayProps } from './fileLibray'
 export { default as FileLibray } from './fileLibray'

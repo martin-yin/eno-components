@@ -1,5 +1,5 @@
 import { Button, Pagination } from 'antd'
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { useFileLibrayContext } from '../provider/provider'
 import { FileLibrayFooterProps, SelectedKeysType } from '../interface'
 

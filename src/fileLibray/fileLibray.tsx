@@ -1,5 +1,5 @@
 import { Modal } from 'antd'
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { FileCategory, FileLibrayHeader, FileLibrayList, FileLibrayFooter } from './components'
 import { useFileLibray } from './hooks/useFileLibray'
 import './index.less'

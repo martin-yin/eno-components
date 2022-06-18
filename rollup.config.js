@@ -1,8 +1,11 @@
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
+import glob from 'glob'
 import packageJSON from './package.json'
 import path from 'path'
+import fs from 'fs'
+import postcss from 'rollup-plugin-postcss'
 
 const globals = {
   react: 'React',
@@ -11,9 +14,15 @@ const globals = {
 }
 
 const external = Object.keys(globals)
-// https://www.npmjs.com/package/@rollup/plugin-babel/v/5.2.1#babelhelpers
 const esExtelrnals = [...external, /@babel\/runtime/, ...Object.keys(packageJSON.dependencies)]
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
+
+const componentEnties = glob.sync('src/**/index.ts')
+const entryInput = path.resolve('src/index.ts')
+componentEnties.push(entryInput)
+
+fs.rmSync('./es', { recursive: true, force: true })
+fs.rmSync('./dist', { recursive: true, force: true })
 
 // Babel配置
 const babelOptions = {
@@ -25,40 +34,53 @@ const babelOptions = {
   plugins: [['@babel/plugin-transform-runtime']]
 }
 
-const buildConf = options => Object.assign({}, commonConfig, options)
-const getPath = _path => path.resolve(__dirname, _path)
+/** @type{import('rollup').Plugin[] */
+const plugins = [
+  postcss({
+    minimize: true,
+    modules: false,
+    use: {
+      sass: null,
+      stylus: null,
+      less: { javascriptEnabled: true }
+    },
+    extract: true
+  }),
+  babel(babelOptions),
+  resolve({
+    browser: true,
+    extensions
+  }),
+  commonjs(),
+]
 
-const outputMap = [
+/** @type{import('rollup').OutputOptions[]}*/
+const output = [
   {
-    file: packageJSON.main, // 通用模块
-    format: 'umd',
-    name: packageJSON.name,
+    format: 'es',
+    preserveModules: true,
+    dir: 'es',
     globals
   },
   {
-    dir: packageJSON.module, // es 模块
-    format: 'es',
+    format: 'umd',
+    file: 'dist/index.js',
     name: packageJSON.name,
-    preserveModules: true,
-    globals
+    globals: {
+      ...globals
+    }
   }
 ]
 
-const commonConfig = {
-  input: getPath('./src/file-libray/index.ts'),
-  plugins: [
-    babel(babelOptions),
-    resolve({
-      browser: true,
-      extensions
-    }),
-    commonjs()
-  ]
-}
-
-export default outputMap.map(output => {
-  return buildConf({
-    output: { name: packageJSON.name, ...output },
-    external: output.format === 'umd' ? external : esExtelrnals
-  })
+const configs = output.map(item => {
+  /** @type{import('rollup').RollupOptions*/
+  const config = {
+    external: item.format === 'umd' ? external : esExtelrnals,
+    input: item.format === 'umd' ? entryInput : componentEnties,
+    output: item,
+    plugins
+  }
+  return config
 })
+
+export default configs

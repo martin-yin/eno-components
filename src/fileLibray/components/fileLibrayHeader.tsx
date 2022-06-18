@@ -1,5 +1,5 @@
 import { Button, Input, Upload } from 'antd'
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { FileLibrayHeaderProps } from '../interface'
 import { useFileLibrayContext } from '../provider/provider'
 

@@ -1,5 +1,5 @@
 import { CheckOutlined } from '@ant-design/icons'
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { useFileLibrayList } from '../hooks/useFileLibrayList'
 import { FileLibrayListProps, FileLibrayTypeEnum } from '../interface'
 

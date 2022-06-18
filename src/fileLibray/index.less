@@ -29,18 +29,22 @@
     flex-basis: 140px;
     border-right: 1px solid #e6e6e6;
     cursor: pointer;
+
     &-menu {
       height: 488px;
       overflow-y: auto;
+
       &__item {
         margin: 0;
         padding: 0 0 0 28px;
         line-height: 40px;
         border-radius: 0;
         padding-left: 36px;
+
         &-current {
           background-color: #f6f7f8;
         }
+
         &-title {
           color: #1a1b1c;
           width: auto;
@@ -63,6 +67,7 @@
       display: block;
       line-height: 40px;
       padding-left: 32px;
+
       // 清除 ant form item 自带的 margin
       .ant-form-item {
         margin-bottom: 10px;
@@ -72,23 +77,28 @@
 
   .file {
     flex: 1;
+
     &-header {
       display: flex;
       margin: 0 auto 20px auto;
       width: 630px;
       height: 32px;
     }
+
     &-header__search {
       flex: 1;
     }
+
     &-header__button {
       flex: 0;
     }
+
     .file-list {
       margin: 0 auto;
       width: 630px;
       height: 428px;
       overflow: hidden;
+
       &-item {
         cursor: pointer;
         position: relative;
@@ -104,11 +114,13 @@
           font-size: 12px;
           text-align: center;
         }
+
         &__cover {
           margin: 0 auto;
           width: 95px;
           height: 95px;
         }
+
         .selected-mask {
           display: none;
           position: absolute;
@@ -119,6 +131,7 @@
           background: rgba(0, 0, 0, 0.41);
           text-align: center;
           border-radius: 2px;
+
           &_icon {
             font-size: 26px;
             color: #fff;
@@ -128,14 +141,17 @@
         }
       }
     }
+
     .footer {
       display: flex;
       height: 28px;
       margin-top: 10px;
       line-height: 28px;
       padding-left: 20px;
+
       &-select {
         flex: 1;
+
         &__text {
           color: #999;
           margin-right: 10px;
